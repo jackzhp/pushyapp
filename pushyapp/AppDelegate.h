@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import <UserNotifications/UserNotifications.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate<UNUserNotificationCenterDelegate> : UIResponder <UIApplicationDelegate>
 
 @property (readonly, strong) NSPersistentCloudKitContainer *persistentContainer;
 
