@@ -10,11 +10,14 @@
 #import "NBannouncement.h"
 #import <BackgroundTasks/BackgroundTasks.h>
 #import <CoreData/NSPersistentContainer.h>
+#import <UserNotifications/UserNotifications.h>
+#import <UIKit/UILocalNotification.h>
 
-
-static NSString *idPullAnnouncement=@"com.zed.pushyapp.pullAnnoucement";
-static int scheduleInterval=20;
+//e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateLaunchForTaskWithIdentifier:@"com.zed.pushyapp.pullAnnouncement"]
+static NSString *idPullAnnouncement=@"com.zed.pushyapp.pullAnnouncement";
+static int scheduleInterval=60*2; //2 minutes
 static NBannouncement *a;
+static BOOL useOld=NO;
 
 
 @implementation NBannouncement{
@@ -22,6 +25,10 @@ static NBannouncement *a;
     void (^completionHandler)(UIBackgroundFetchResult result);
     NSURLSessionDownloadTask *task;
 
+}
++(void)cancelBGtasks{
+    [BGTaskScheduler.sharedScheduler cancelTaskRequestWithIdentifier:idPullAnnouncement];
+    [BGTaskScheduler.sharedScheduler cancelAllTaskRequests];
 }
 
 +(void)scheduleToPull{
@@ -41,6 +48,7 @@ static NBannouncement *a;
                                                         usingQueue:nil //to use a default background queue
                                                      launchHandler:^(__kindof BGTask * _Nonnull task) {
         // Downcast the parameter to an app refresh task as this identifier is used for a refresh request.
+        [NBannouncement createNotification:5];
         NSLog(@"laucning bk task");
         [NBannouncement scheduleToPull];
         [NBannouncement doPull1:task];
@@ -125,6 +133,38 @@ didFinishDownloadingToURL:(NSURL *)location{
 didCompleteWithError:(NSError *)error{ //for client side error
     if(error){}else return; //this is called with error ==nil after finished is called
     NSLog(@"download error:%@",error);
+}
+
+
+
+
++(void)createNotification:(int)secondsInFuture{
+    if(useOld){
+        UILocalNotification *localNotif=[[UILocalNotification alloc]init];
+        localNotif.fireDate=[[NSDate date] dateByAddingTimeInterval:secondsInFuture];
+        localNotif.timeZone=nil;
+        localNotif.alertTitle=@"Alert title";
+        localNotif.alertBody=@"Alert body";
+        localNotif.alertAction=@"OK";
+        localNotif.soundName=UILocalNotificationDefaultSoundName;
+        localNotif.applicationIconBadgeNumber=100;
+        localNotif.category=@"main";
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+    }else{
+        NSLog(@"will create notification with new:%@",UNUserNotificationCenter.currentNotificationCenter.delegate);
+        UNMutableNotificationContent *nc=[[UNMutableNotificationContent alloc]init];
+        nc.title=@"Weekly Staff Meeting";
+        nc.body=@"body";
+        nc.sound=UNNotificationSound.defaultSound;
+        nc.userInfo=[NSDictionary dictionaryWithObjectsAndKeys:@"someid", @"name1",@"value2",@"name2", nil];
+        nc.categoryIdentifier = @"ar";
+        UNTimeIntervalNotificationTrigger* trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:secondsInFuture repeats: NO];
+        UNNotificationRequest *nr=[UNNotificationRequest requestWithIdentifier:@"1234" content:nc trigger:trigger];
+        
+        [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:nr withCompletionHandler:^(NSError * _Nullable error) {
+            NSLog(@"notification scheduled with error:%@",error);
+        }];
+    }
 }
 
 @end

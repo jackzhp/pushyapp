@@ -17,8 +17,17 @@ NBannouncement *a;
 
 @implementation AppDelegate
 
-//- (void)applicationWillEnterForeground:(UIApplication *)application API_AVAILABLE(ios(4.0));
+//- (void)applicationWillEnterForeground:(UIApplication *)application API_AVAILABLE(ios(4.0)){
+//        [NBannouncement scheduleToPull];
+//    }
+//- (void)applicationWillEnterBackground:(UIApplication *)application API_AVAILABLE(ios(4.0)){
+//    [NBannouncement scheduleToPull];
+//
+//}
+
+//scene based, the following one will not be called.
 - (void)applicationDidEnterBackground:(UIApplication *)application API_AVAILABLE(ios(4.0)){
+    NSLog(@"did enter background");
     [NBannouncement scheduleToPull];
 
 }
@@ -40,6 +49,7 @@ NBannouncement *a;
     NSLog(@"delegate:%@",UNUserNotificationCenter.currentNotificationCenter.delegate);
 //    a=[[NBannouncement alloc]init];
     [NBannouncement registerTask];
+//    [NBannouncement scheduleToPull];
     return YES;
 }
 

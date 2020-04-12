@@ -16,6 +16,8 @@
 +(void)scheduleToPull;
 +(void)doPull0:(void (^)(UIBackgroundFetchResult result))completionHandler;
 
++(void)createNotification:(int)secondsInFuture;
+
 @end
 
 #endif /* NBannouncement_h */

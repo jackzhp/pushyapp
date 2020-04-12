@@ -19,7 +19,6 @@
 		C51A44942427B49A001C2082 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C51A44922427B49A001C2082 /* UserNotificationsUI.framework */; };
 		C557E8182428AB6C00AE1480 /* NBannoucement.m in Sources */ = {isa = PBXBuildFile; fileRef = C557E8172428AB6C00AE1480 /* NBannoucement.m */; };
 		C557E81B2428C1B700AE1480 /* BackgroundTasks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C557E81A2428C1B700AE1480 /* BackgroundTasks.framework */; };
-		C557E81E2428E19F00AE1480 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C557E81D2428E19F00AE1480 /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +40,6 @@
 		C557E8172428AB6C00AE1480 /* NBannoucement.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBannoucement.m; sourceTree = "<group>"; };
 		C557E8192428AB8A00AE1480 /* NBannouncement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBannouncement.h; sourceTree = "<group>"; };
 		C557E81A2428C1B700AE1480 /* BackgroundTasks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackgroundTasks.framework; path = System/Library/Frameworks/BackgroundTasks.framework; sourceTree = SDKROOT; };
-		C557E81D2428E19F00AE1480 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +48,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C51A44942427B49A001C2082 /* UserNotificationsUI.framework in Frameworks */,
-				C557E81E2428E19F00AE1480 /* CoreData.framework in Frameworks */,
 				C51A44932427B49A001C2082 /* UserNotifications.framework in Frameworks */,
 				C557E81B2428C1B700AE1480 /* BackgroundTasks.framework in Frameworks */,
 			);
@@ -100,7 +97,6 @@
 		C51A44902427B49A001C2082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C557E81D2428E19F00AE1480 /* CoreData.framework */,
 				C557E81A2428C1B700AE1480 /* BackgroundTasks.framework */,
 				C51A44912427B49A001C2082 /* UserNotifications.framework */,
 				C51A44922427B49A001C2082 /* UserNotificationsUI.framework */,

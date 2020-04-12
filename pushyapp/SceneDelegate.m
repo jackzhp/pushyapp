@@ -1,5 +1,6 @@
 #import "SceneDelegate.h"
 #import "AppDelegate.h"
+#import "NBannouncement.h"
 
 @interface SceneDelegate ()
 
@@ -46,6 +47,10 @@
     // Use this method to save data, release shared resources, and store enough scene-specific state information
     // to restore the scene back to its current state.
 
+        NSLog(@"scene did enter background");
+        [NBannouncement scheduleToPull];
+
+    
     // Save changes in the application's managed object context when the application transitions to the background.
     [(AppDelegate *)UIApplication.sharedApplication.delegate saveContext];
 }

@@ -8,12 +8,12 @@
 
 #import "ViewController.h"
 #import <UserNotifications/UserNotifications.h>
+#import "NBannouncement.h"
 
 
 @interface ViewController ()
 
 -(void)requestPermissionToNotify;
--(void)createNotification:(int)secondsInFuture;
 @end
 
 @implementation ViewController
@@ -21,7 +21,7 @@
 
 - (IBAction)scheduleNotification:(id)sender {
     [self requestPermissionToNotify];
-    [self createNotification:5];
+    [NBannouncement createNotification:5];
 }
 
 
@@ -85,34 +85,6 @@ BOOL useOld=NO;
     
 }
 
--(void)createNotification:(int)secondsInFuture{
-    if(useOld){
-        UILocalNotification *localNotif=[[UILocalNotification alloc]init];
-        localNotif.fireDate=[[NSDate date] dateByAddingTimeInterval:secondsInFuture];
-        localNotif.timeZone=nil;
-        localNotif.alertTitle=@"Alert title";
-        localNotif.alertBody=@"Alert body";
-        localNotif.alertAction=@"OK";
-        localNotif.soundName=UILocalNotificationDefaultSoundName;
-        localNotif.applicationIconBadgeNumber=100;
-        localNotif.category=@"main";
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
-    }else{
-        NSLog(@"will create notification with new:%@",UNUserNotificationCenter.currentNotificationCenter.delegate);
-        UNMutableNotificationContent *nc=[[UNMutableNotificationContent alloc]init];
-        nc.title=@"Weekly Staff Meeting";
-        nc.body=@"body";
-        nc.sound=UNNotificationSound.defaultSound;
-        nc.userInfo=[NSDictionary dictionaryWithObjectsAndKeys:@"someid", @"name1",@"value2",@"name2", nil];
-        nc.categoryIdentifier = @"ar";
-        UNTimeIntervalNotificationTrigger* trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:secondsInFuture repeats: NO];
-        UNNotificationRequest *nr=[UNNotificationRequest requestWithIdentifier:@"1234" content:nc trigger:trigger];
-        
-        [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:nr withCompletionHandler:^(NSError * _Nullable error) {
-            NSLog(@"scheduled with error:%@",error);
-        }];
-    }
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
